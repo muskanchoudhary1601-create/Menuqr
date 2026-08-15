@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', Inter, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Glassmorphism & Modern Utilities */
+.glass-header {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-header-dark {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(241, 245, 249, 0.8);
+}
+
+.glass-card-dark {
+  background: rgba(30, 41, 59, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gradient-text-orange {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #db2777 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-dark {
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mesh-bg-subtle {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(at 10% 10%, rgba(249, 115, 22, 0.08) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(234, 88, 12, 0.06) 0px, transparent 50%),
+    radial-gradient(at 50% 90%, rgba(251, 146, 60, 0.05) 0px, transparent 50%);
+}
+
+.mesh-bg-dark {
+  background-color: #0f172a;
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(249, 115, 22, 0.15) 0px, transparent 50%),
+    radial-gradient(at 85% 85%, rgba(59, 130, 246, 0.12) 0px, transparent 50%);
+}
+
+/* Interactive Card Hover Physics */
+.interactive-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.interactive-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+}
+
+/* Button Shimmer / Pulse */
+.btn-glow {
+  position: relative;
+  transition: all 0.2s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 24px -2px rgba(249, 115, 22, 0.45);
+  transform: translateY(-1px);
+}
+.btn-glow:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Custom Sleek Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Hides scrollbars for clean horizontal categories */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
