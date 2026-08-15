@@ -488,16 +488,140 @@ const Landing = () => {
           <p className="text-slate-400 text-sm max-w-xl mx-auto mt-3">
             Join hundreds of forward-thinking restaurants and cafes that delight customers every day.
           </p>
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex justify-center gap-4">
             <Link
               to="/register"
               className="btn-glow inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-amber-600 text-white font-bold text-sm px-8 py-3.5 rounded-2xl shadow-lg shadow-orange-500/25"
             >
               Get Started for Free <ArrowRight className="w-4 h-4" />
             </Link>
+            <Link
+              to="/pricing"
+              className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm px-6 py-3.5 rounded-2xl transition-colors"
+            >
+              View Pricing
+            </Link>
           </div>
         </div>
       </section>
+
+      {/* Global Footer */}
+      <footer className="bg-slate-950 text-slate-400 text-xs py-14 border-t border-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-900">
+            {/* Brand column */}
+            <div className="space-y-3">
+              <Link to="/" className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white shadow-sm">
+                  <QrCode className="w-4 h-4" />
+                </div>
+                <span className="font-bold text-base text-white">
+                  Menu<span className="text-orange-500">QR</span>
+                </span>
+              </Link>
+              <p className="text-[11px] leading-relaxed text-slate-500">
+                Modern contactless QR code menus and hospitality management platform for restaurants, cafes, and bars.
+              </p>
+            </div>
+
+            {/* Navigation links */}
+            <div>
+              <h4 className="font-extrabold text-white text-[11px] uppercase tracking-wider mb-3">
+                Product
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link to="/features" className="hover:text-orange-400 transition-colors">
+                    Features & Studio
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/how-it-works" className="hover:text-orange-400 transition-colors">
+                    How It Works
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/pricing" className="hover:text-orange-400 transition-colors">
+                    Pricing Plans
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/how-it-works" className="hover:text-orange-400 transition-colors">
+                    Interactive Live Demo
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-extrabold text-white text-[11px] uppercase tracking-wider mb-3">
+                Solutions
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link to="/features" className="hover:text-orange-400 transition-colors">
+                    Fine Dining & Bistros
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/features" className="hover:text-orange-400 transition-colors">
+                    Cafes & Coffee Shops
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/pricing" className="hover:text-orange-400 transition-colors">
+                    Multi-Outlet Franchises
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/features" className="hover:text-orange-400 transition-colors">
+                    Table Standee Generator
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-extrabold text-white text-[11px] uppercase tracking-wider mb-3">
+                Company & Help
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link to="/contact" className="hover:text-orange-400 transition-colors">
+                    Contact Support
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/login" className="hover:text-orange-400 transition-colors">
+                    Owner Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/register" className="hover:text-orange-400 transition-colors">
+                    Create Account
+                  </Link>
+                </li>
+                <li>
+                  <a href="mailto:support@menuqr.com" className="hover:text-orange-400 transition-colors">
+                    support@menuqr.com
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-600">
+            <div>
+              © {new Date().getFullYear()} MenuQR Inc. All rights reserved.
+            </div>
+            <div className="flex items-center gap-4">
+              <span>Privacy Policy</span>
+              <span>Terms of Service</span>
+              <span>Security</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
