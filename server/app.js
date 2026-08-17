@@ -17,6 +17,9 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 
+// Enable trust proxy for Render / Vercel / Heroku load balancers
+app.set('trust proxy', 1);
+
 // --- Production HTTP Compression ---
 app.use(compression());
 
@@ -41,9 +44,9 @@ app.use(
   })
 );
 
-
 const allowedOrigins = [
   process.env.CLIENT_URL,
+  'https://menuqr-1-x4w7.onrender.com',
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:5175',
@@ -61,9 +64,11 @@ app.use(
       // Allow requests with no origin (e.g. mobile apps, curl, Postman, same-origin)
       if (!origin) return callback(null, true);
 
-      // In development or if origin is from localhost / 127.0.0.1 or in allowed list
+      // Allow matching origins, vercel previews, localhost, or non-production
       if (
         allowedOrigins.includes(origin) ||
+        /^https:\/\/.*\.vercel\.app$/.test(origin) ||
+        /^https:\/\/.*\.onrender\.com$/.test(origin) ||
         /^http:\/\/localhost:\d+$/.test(origin) ||
         /^http:\/\/127\.0\.0\.1:\d+$/.test(origin) ||
         process.env.NODE_ENV !== 'production'
