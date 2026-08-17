@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
       setUser(data.user);
       setRestaurant(data.restaurant);
     } catch (error) {
+      localStorage.removeItem('menuqr_token');
       setUser(null);
       setRestaurant(null);
     } finally {
@@ -30,6 +31,9 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (formData) => {
     const { data } = await api.post('/auth/register', formData);
+    if (data.token) {
+      localStorage.setItem('menuqr_token', data.token);
+    }
     setUser(data.user);
     setRestaurant(data.restaurant);
     return data;
@@ -37,15 +41,24 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const { data } = await api.post('/auth/login', { email, password });
+    if (data.token) {
+      localStorage.setItem('menuqr_token', data.token);
+    }
     setUser(data.user);
     setRestaurant(data.restaurant);
     return data;
   };
 
   const logout = async () => {
-    await api.post('/auth/logout');
-    setUser(null);
-    setRestaurant(null);
+    try {
+      await api.post('/auth/logout');
+    } catch (e) {
+      // Ignore logout errors
+    } finally {
+      localStorage.removeItem('menuqr_token');
+      setUser(null);
+      setRestaurant(null);
+    }
   };
 
   return (

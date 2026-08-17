@@ -96,7 +96,16 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
-// --- Health check ---
+// --- Root & Health checks ---
+app.get(['/', '/api'], (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    message: 'MenuQR API is running and healthy',
+    version: '1.0.0',
+    documentation: '/api/health',
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', message: 'MenuQR API is running' });
 });

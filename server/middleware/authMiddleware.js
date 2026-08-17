@@ -5,7 +5,12 @@ const User = require('../models/User');
 // On success, attaches the authenticated user (without password) to req.user.
 const protect = async (req, res, next) => {
   try {
-    const token = req.cookies?.token;
+    let token = req.cookies?.token;
+
+    // Support Bearer token in Authorization header for cross-domain setups (Vercel + Render)
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
 
     if (!token) {
       return res.status(401).json({ message: 'Not authorized, no token' });

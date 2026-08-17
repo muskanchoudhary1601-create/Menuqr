@@ -48,9 +48,10 @@ const register = async (req, res, next) => {
     user.restaurant = restaurant._id;
     await user.save();
 
-    generateTokenAndSetCookie(res, user._id);
+    const token = generateTokenAndSetCookie(res, user._id);
 
     res.status(201).json({
+      token,
       user: {
         id: user._id,
         ownerName: user.ownerName,
@@ -88,9 +89,10 @@ const login = async (req, res, next) => {
 
     const restaurant = await Restaurant.findOne({ owner: user._id });
 
-    generateTokenAndSetCookie(res, user._id);
+    const token = generateTokenAndSetCookie(res, user._id);
 
     res.status(200).json({
+      token,
       user: {
         id: user._id,
         ownerName: user.ownerName,
