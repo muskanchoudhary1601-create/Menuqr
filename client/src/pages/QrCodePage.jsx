@@ -154,16 +154,22 @@ const QrCodePage = () => {
                 </div>
               </div>
 
-              {/* QR Code Canvas */}
-              <div className="mt-4 p-4 bg-slate-50 rounded-2xl border border-slate-100 flex justify-center items-center">
-                {qrTargetUrl ? (
-                  <canvas ref={canvasRef} className="max-w-full h-auto rounded-xl shadow-xs" style={{ width: '220px', height: '220px' }} />
-                ) : (
-                  <div className="w-56 h-56 flex flex-col items-center justify-center text-slate-300 border-2 border-dashed border-slate-200 rounded-xl">
-                    <QrCodeIcon className="w-12 h-12 stroke-[1.5] mb-2" />
-                    <span className="text-xs font-medium">Generating QR...</span>
-                  </div>
-                )}
+              {/* QR Code Canvas Container */}
+              <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center">
+                <div className="w-[220px] h-[220px] max-w-full aspect-square relative flex items-center justify-center bg-white p-2.5 rounded-2xl shadow-xs border border-slate-200/60 overflow-hidden">
+                  {qrTargetUrl ? (
+                    <canvas
+                      ref={canvasRef}
+                      className="w-full h-full object-contain rounded-lg aspect-square block mx-auto"
+                      style={{ width: '100%', height: '100%', aspectRatio: '1 / 1' }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center text-slate-300">
+                      <QrCodeIcon className="w-10 h-10 stroke-[1.5] mb-2" />
+                      <span className="text-xs font-medium">Generating QR...</span>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Instruction Badge */}

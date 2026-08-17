@@ -221,14 +221,20 @@ const QrPrint = () => {
           </h1>
 
           {/* QR Code Canvas */}
-          <div className="my-6 p-4 bg-white border-2 border-dashed border-slate-300 rounded-2xl inline-block shadow-xs">
-            {qrTargetUrl ? (
-              <canvas ref={canvasRef} className="rounded-lg" style={{ width: '220px', height: '220px' }} />
-            ) : (
-              <div className="w-56 h-56 border border-slate-200 rounded-lg flex items-center justify-center text-slate-300 text-xs">
-                QR Code
-              </div>
-            )}
+          <div className="my-6 p-4 bg-white border-2 border-dashed border-slate-300 rounded-2xl inline-flex items-center justify-center shadow-xs">
+            <div className="w-[220px] h-[220px] max-w-full aspect-square flex items-center justify-center">
+              {qrTargetUrl ? (
+                <canvas
+                  ref={canvasRef}
+                  className="w-full h-full object-contain rounded-lg aspect-square block"
+                  style={{ width: '100%', height: '100%', aspectRatio: '1 / 1' }}
+                />
+              ) : (
+                <div className="w-full h-full border border-slate-200 rounded-lg flex items-center justify-center text-slate-300 text-xs">
+                  QR Code
+                </div>
+              )}
+            </div>
           </div>
 
           {/* 3 Step Instruction Guide */}
