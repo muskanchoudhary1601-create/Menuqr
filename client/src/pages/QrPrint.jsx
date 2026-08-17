@@ -29,7 +29,14 @@ const QrPrint = () => {
         color: { dark: '#0f172a', light: '#ffffff' },
       },
       (err) => {
-        if (err) setError('Could not generate QR code for print');
+        if (err) {
+          setError('Could not generate QR code for print');
+          return;
+        }
+        if (canvasRef.current) {
+          canvasRef.current.style.width = '100%';
+          canvasRef.current.style.height = '100%';
+        }
       }
     );
   }, [qrTargetUrl]);
@@ -222,12 +229,12 @@ const QrPrint = () => {
 
           {/* QR Code Canvas */}
           <div className="my-5 p-3.5 bg-white border-2 border-dashed border-slate-300 rounded-2xl inline-flex items-center justify-center shadow-xs">
-            <div className="w-[170px] h-[170px] max-w-full aspect-square flex items-center justify-center">
+            <div className="w-[170px] h-[170px] max-w-full aspect-square flex items-center justify-center overflow-hidden">
               {qrTargetUrl ? (
                 <canvas
                   ref={canvasRef}
-                  className="w-full h-full object-contain rounded-lg aspect-square block"
-                  style={{ width: '100%', height: '100%', aspectRatio: '1 / 1' }}
+                  className="w-full h-full max-w-full max-h-full object-contain rounded-lg aspect-square block"
+                  style={{ width: '100%', height: '100%', maxWidth: '100%', maxHeight: '100%', aspectRatio: '1 / 1' }}
                 />
               ) : (
                 <div className="w-full h-full border border-slate-200 rounded-lg flex items-center justify-center text-slate-300 text-xs">

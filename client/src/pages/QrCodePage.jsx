@@ -55,6 +55,10 @@ const QrCodePage = () => {
         setError('Could not generate QR code');
         return;
       }
+      if (canvasRef.current) {
+        canvasRef.current.style.width = '100%';
+        canvasRef.current.style.height = '100%';
+      }
       setPngUrl(canvasRef.current.toDataURL('image/png'));
     });
 
@@ -75,7 +79,6 @@ const QrCodePage = () => {
     if (!svgString) return;
     const blob = new Blob([svgString], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
     a.href = url;
     a.download = `${restaurant?.slug || 'menu'}-qr-code.svg`;
     a.click();
@@ -132,50 +135,58 @@ const QrCodePage = () => {
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Preview Card */}
           <div className="lg:col-span-6 flex flex-col items-center">
-            <div className="w-full max-w-md bg-white rounded-3xl border-2 border-slate-900 shadow-2xl p-8 sm:p-10 text-center relative overflow-hidden transition-all duration-300 hover:shadow-card-hover">
+            <div className="w-full max-w-[390px] bg-white rounded-3xl border border-slate-200 shadow-xl shadow-slate-200/50 p-6 sm:p-7 text-center relative overflow-hidden transition-all duration-300 hover:shadow-2xl">
+              {/* Decorative Top Trim */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600" />
+
               {/* Decorative Corner Ornaments */}
-              <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-slate-900/40" />
-              <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-slate-900/40" />
-              <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-slate-900/40" />
-              <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-slate-900/40" />
+              <div className="absolute top-3.5 left-3.5 w-3.5 h-3.5 border-t-2 border-l-2 border-slate-300/80 rounded-tl-sm" />
+              <div className="absolute top-3.5 right-3.5 w-3.5 h-3.5 border-t-2 border-r-2 border-slate-300/80 rounded-tr-sm" />
+              <div className="absolute bottom-3.5 left-3.5 w-3.5 h-3.5 border-b-2 border-l-2 border-slate-300/80 rounded-bl-sm" />
+              <div className="absolute bottom-3.5 right-3.5 w-3.5 h-3.5 border-b-2 border-r-2 border-slate-300/80 rounded-br-sm" />
 
               {/* Restaurant Logo & Header */}
-              {restaurant?.logo ? (
-                <img
-                  src={restaurant.logo}
-                  alt={restaurant.name}
-                  className="w-16 h-16 rounded-full object-cover mx-auto mb-3 border-2 border-slate-200 shadow-xs"
-                />
-              ) : (
-                <div className="w-14 h-14 rounded-2xl bg-orange-600 text-white font-black text-xl flex items-center justify-center mx-auto mb-3 shadow-xs">
-                  {restaurant?.name?.[0]?.toUpperCase() || 'M'}
+              <div className="pt-2">
+                {restaurant?.logo ? (
+                  <img
+                    src={restaurant.logo}
+                    alt={restaurant.name}
+                    className="w-14 h-14 rounded-2xl object-cover mx-auto mb-2.5 border-2 border-white shadow-md ring-1 ring-slate-100"
+                  />
+                ) : (
+                  <div className="w-13 h-13 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-black text-xl flex items-center justify-center mx-auto mb-2.5 shadow-md shadow-orange-500/20">
+                    {restaurant?.name?.[0]?.toUpperCase() || 'M'}
+                  </div>
+                )}
+
+                <h2 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight leading-snug truncate px-2">
+                  {restaurant?.name || 'Restaurant Name'}
+                </h2>
+
+                <div className="mt-1 flex items-center justify-center gap-2">
+                  <span className="h-px w-6 bg-slate-200" />
+                  <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+                    Digital Table Menu
+                  </span>
+                  <span className="h-px w-6 bg-slate-200" />
                 </div>
-              )}
 
-              <h2 className="text-xl font-extrabold tracking-tight text-slate-900 uppercase">
-                {restaurant?.name || 'Restaurant Name'}
-              </h2>
-
-              <div className="my-3 flex items-center justify-center gap-2">
-                <span className="h-[1px] w-10 bg-slate-300" />
-                <span className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">
-                  Digital Table Menu
-                </span>
-                <span className="h-[1px] w-10 bg-slate-300" />
+                <div className="mt-2.5">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 text-white text-[11px] font-extrabold tracking-wider uppercase shadow-xs">
+                    <Smartphone className="w-3.5 h-3.5 text-orange-400" />
+                    Scan with Phone Camera
+                  </span>
+                </div>
               </div>
 
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight mt-1">
-                SCAN TO VIEW
-              </h1>
-
-              {/* QR Code Canvas */}
-              <div className="my-5 p-3.5 bg-white border-2 border-dashed border-slate-300 rounded-2xl inline-flex items-center justify-center shadow-xs">
-                <div className="w-[170px] h-[170px] max-w-full aspect-square flex items-center justify-center">
+              {/* QR Code Canvas Frame */}
+              <div className="my-4 p-3 bg-slate-50 border border-slate-200/90 rounded-2xl flex items-center justify-center shadow-inner">
+                <div className="w-[170px] h-[170px] max-w-full aspect-square flex items-center justify-center p-2 bg-white rounded-xl shadow-xs border border-slate-200/60 overflow-hidden">
                   {qrTargetUrl ? (
                     <canvas
                       ref={canvasRef}
-                      className="w-full h-full object-contain rounded-lg aspect-square block mx-auto"
-                      style={{ width: '100%', height: '100%', aspectRatio: '1 / 1' }}
+                      className="w-full h-full max-w-full max-h-full object-contain rounded-lg aspect-square block mx-auto"
+                      style={{ width: '100%', height: '100%', maxWidth: '100%', maxHeight: '100%', aspectRatio: '1 / 1' }}
                     />
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center text-slate-300">
@@ -187,34 +198,34 @@ const QrCodePage = () => {
               </div>
 
               {/* 3 Step Instruction Guide */}
-              <div className="grid grid-cols-3 gap-2 text-center text-slate-600 mb-6 px-2">
-                <div className="flex flex-col items-center">
-                  <span className="w-5 h-5 rounded-full bg-slate-100 text-slate-900 font-bold text-[10px] flex items-center justify-center mb-1">
+              <div className="grid grid-cols-3 gap-1.5 text-center text-slate-600 mb-4 px-1">
+                <div className="flex flex-col items-center bg-slate-50/80 rounded-xl py-2 px-1 border border-slate-100">
+                  <span className="w-4 h-4 rounded-full bg-orange-100 text-orange-700 font-black text-[9px] flex items-center justify-center mb-1">
                     1
                   </span>
-                  <span className="text-[10px] font-semibold leading-tight">Open Camera</span>
+                  <span className="text-[10px] font-bold text-slate-700 leading-tight">Open Camera</span>
                 </div>
-                <div className="flex flex-col items-center">
-                  <span className="w-5 h-5 rounded-full bg-slate-100 text-slate-900 font-bold text-[10px] flex items-center justify-center mb-1">
+                <div className="flex flex-col items-center bg-slate-50/80 rounded-xl py-2 px-1 border border-slate-100">
+                  <span className="w-4 h-4 rounded-full bg-orange-100 text-orange-700 font-black text-[9px] flex items-center justify-center mb-1">
                     2
                   </span>
-                  <span className="text-[10px] font-semibold leading-tight">Point at QR</span>
+                  <span className="text-[10px] font-bold text-slate-700 leading-tight">Point at QR</span>
                 </div>
-                <div className="flex flex-col items-center">
-                  <span className="w-5 h-5 rounded-full bg-slate-100 text-slate-900 font-bold text-[10px] flex items-center justify-center mb-1">
+                <div className="flex flex-col items-center bg-slate-50/80 rounded-xl py-2 px-1 border border-slate-100">
+                  <span className="w-4 h-4 rounded-full bg-orange-100 text-orange-700 font-black text-[9px] flex items-center justify-center mb-1">
                     3
                   </span>
-                  <span className="text-[10px] font-semibold leading-tight">Browse & Enjoy</span>
+                  <span className="text-[10px] font-bold text-slate-700 leading-tight">Browse Menu</span>
                 </div>
               </div>
 
               {/* Copy URL trigger */}
-              <div className="pt-4 border-t border-slate-100">
+              <div className="pt-3 border-t border-slate-100">
                 <button
                   onClick={copyLink}
                   className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-slate-50 hover:bg-orange-50/70 border border-slate-200/70 text-left transition-all duration-200 group"
                 >
-                  <span className="text-xs text-slate-600 font-mono truncate max-w-[220px]">
+                  <span className="text-[11px] text-slate-600 font-mono truncate max-w-[200px]">
                     {menuUrl}
                   </span>
                   <span className="flex items-center gap-1 text-xs font-bold text-orange-600 shrink-0">
