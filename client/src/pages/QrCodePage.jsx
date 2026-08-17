@@ -169,8 +169,8 @@ const QrCodePage = () => {
               </h1>
 
               {/* QR Code Canvas */}
-              <div className="my-6 p-4 bg-white border-2 border-dashed border-slate-300 rounded-2xl inline-flex items-center justify-center shadow-xs">
-                <div className="w-[220px] h-[220px] max-w-full aspect-square flex items-center justify-center">
+              <div className="my-5 p-3.5 bg-white border-2 border-dashed border-slate-300 rounded-2xl inline-flex items-center justify-center shadow-xs">
+                <div className="w-[170px] h-[170px] max-w-full aspect-square flex items-center justify-center">
                   {qrTargetUrl ? (
                     <canvas
                       ref={canvasRef}
@@ -179,7 +179,7 @@ const QrCodePage = () => {
                     />
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center text-slate-300">
-                      <QrCodeIcon className="w-10 h-10 stroke-[1.5] mb-2" />
+                      <QrCodeIcon className="w-8 h-8 stroke-[1.5] mb-1" />
                       <span className="text-xs font-medium">Generating QR...</span>
                     </div>
                   )}

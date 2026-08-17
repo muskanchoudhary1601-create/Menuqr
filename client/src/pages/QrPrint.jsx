@@ -221,8 +221,8 @@ const QrPrint = () => {
           </h1>
 
           {/* QR Code Canvas */}
-          <div className="my-6 p-4 bg-white border-2 border-dashed border-slate-300 rounded-2xl inline-flex items-center justify-center shadow-xs">
-            <div className="w-[220px] h-[220px] max-w-full aspect-square flex items-center justify-center">
+          <div className="my-5 p-3.5 bg-white border-2 border-dashed border-slate-300 rounded-2xl inline-flex items-center justify-center shadow-xs">
+            <div className="w-[170px] h-[170px] max-w-full aspect-square flex items-center justify-center">
               {qrTargetUrl ? (
                 <canvas
                   ref={canvasRef}
